@@ -1,35 +1,80 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import React, { lazy, Suspense, useState } from "react";
+import ReactDOM from "react-dom/client"
+import Header from "./components/Header";
+import Body from "./components/Body";
+import 'flowbite';
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import Error from "./components/Error";
+import {Outlet, RouterProvider, createBrowserRouter} from "react-router-dom"
+import RestaurantMenu from "./components/RestaurantMenu";
+import userContext from "./utils/userContext";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import Cart from "./components/Cart";
+const About = lazy(() => import('./components/About'))
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const AppLayout = () => {
+    const [user, setUser] = useState({
+        name: "amin",
+        email: "amin@gmail.com"
+    })
+    
+    return (
+    <Provider store={store}>
+        <userContext.Provider
+        value={{
+            user: user,
+            setUser: setUser
+        }}
+        >
+        <Header />
+        <Outlet />
+        <Footer />  
+        </userContext.Provider>
+    </Provider>
+    )
 }
 
-export default App
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <AppLayout />,
+        errorElement: <Error />,
+        children: [
+            {
+                path: "/",
+                element: <Body />
+            },
+            {
+                path: "/about",
+                element: (
+                    <Suspense fallback={<h1>Loading...</h1>}>
+                        <About />
+                    </Suspense>
+                )
+            },
+            {
+                path: "/contact",
+                element: <Contact />
+            },
+            {
+                path: "/restaurant/:resId",
+                element: <RestaurantMenu />,
+                children: []
+            },
+            {
+                path: "/cart",
+                element: <Cart />
+            }
+        ]
+
+    }
+
+])
+
+const root = ReactDOM.createRoot(document.querySelector("#root"))
+
+root.render(<RouterProvider router={router}/>);
+
