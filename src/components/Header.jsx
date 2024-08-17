@@ -59,7 +59,7 @@ const Header = () => {
               <Link href="#" className="block px-3 text-red-900 rounded hover:bg-red-900 hover:text-yellow-300 md:p-2" aria-current="page">Home</Link>
             </li>
             <li>
-              <Link href="#" className="flex justify-center items-center px-3 text-red-900 rounded hover:bg-red-900 hover:text-yellow-300 md:p-2">Cart<FaCartArrowDown size={"1.3em"} className="mx-1"/>{<p>{cartItems.length}</p>}</Link>
+              <Link href="#" className="flex items-center px-3 text-red-900 rounded hover:bg-red-900 hover:text-yellow-300 md:p-2">Cart<FaCartArrowDown size={"1.3em"} className="mx-1"/>{<p>{cartItems.length}</p>}</Link>
             </li>
             <li>
               <Link href="#" className="block px-3 text-red-900 rounded hover:bg-red-900 hover:text-yellow-300 md:p-2">Services</Link>
