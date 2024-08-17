@@ -9,7 +9,9 @@ function useRestaurant() {
     }, [])
     
     async function getRestaurants() {
-        fetch("/api/fetch-api")
+        const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+        const targetUrl = GET_RESTAURANT_URL;
+        fetch(proxyUrl + targetUrl)
         .then(response => response.json())
         .then(res => setAllRestaurant(res?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants))
         .catch(error => console.error('Error:', error));
