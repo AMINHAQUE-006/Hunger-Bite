@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 
 export default async (req, res) => {
     try {
-        const response = await fetch('/api/fetch-api');
+        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.518006&lng=88.383206&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
         
         if (!response.ok) {
             // Log the error response status and text for debugging

@@ -9,7 +9,7 @@ function useRestaurant() {
     }, [])
     
     async function getRestaurants() {
-        fetch(proxyUrl + targetUrl)
+        fetch("/api/fetch-api")
         .then(response => response.json())
         .then(res => setAllRestaurant(res?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants))
         .catch(error => console.error('Error:', error));
